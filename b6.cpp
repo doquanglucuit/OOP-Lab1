@@ -1,7 +1,9 @@
 #include<bits/stdc++.h>
-using namespace std;
 #define sz(x) (int) (x).size()
-vector<int> z_function (const vector<int> &A) { // Thuật toán z function
+
+using namespace std;
+
+vector<int> z_function (const vector<int> &A) { // Thuật toán Z-function
     vector<int> z(sz(A), 0);
     z[0] = 0;
     int L = 0, R = 0;
@@ -35,8 +37,8 @@ int main () {
     s.push_back(mi); // thêm một phần tử không có trong cả a và b vào để ngăn cách a và b (chọn "|" là giá tri nhỏ nhất của 2 mảng trừ đi 1)
     for (int x : b) s.push_back(x);
 
-    vector<int> z = z_function(s);
-    vector<int> result;
+    vector<int> z = z_function(s), result;
+
     for (int i = m + 1; i < sz(s); i++) if (z[i] == m)
         result.push_back(i - m - 1);
 
