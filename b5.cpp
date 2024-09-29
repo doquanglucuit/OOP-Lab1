@@ -2,29 +2,33 @@
 
 using namespace std;
 
-int numberDayOfMonth[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // số ngày trong 1 tháng
+int numDay[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // số ngày trong 1 tháng
 
-void find_day (int D, int M, int Y) {
-    if (D == 0) {
-        M--;
-        if (M == 0) M = 12, Y = Y - 1;
-        D = numberDayOfMonth[M];
-    }
-    else if (D > numberDayOfMonth[M]) {
+void find_day (int stt, int Y) {
+    int M = 1;
+    while (stt - numDay[M] > 0) {
+        stt -= numDay[M];
         M++;
-        if (M == 13) M = 1, Y = Y + 1;
-        D = 1;
     }
+    int D = stt;
     cout << D << '\/' << M << '\/' << Y << '\n';
 }
 
 int main () {
     int D, M, Y; cin >> D >> M >> Y;
-    if (Y % 4 == 0 and Y % 100 != 0) numberDayOfMonth[2] = 29; // xử lí năm nhuận
+    if (Y % 4 == 0 and Y % 100 != 0) numDay[2] = 29; // xử lí năm nhuận
     int stt = D;
-    for (int i = 1; i < M; i++) stt += numberDayOfMonth[i];
+    for (int i = 1; i < M; i++) stt += numDay[i];
 
-    cout << "Next day: "; find_day(D + 1, M, Y);
-    cout << "Previous day: "; find_day(D - 1, M, Y);
-    cout << stt << '\n';
+    if (D == 1 and M == 1) {
+        cout << "Ngay sau: " << 2 << '\/' << 1 << '\/' << Y << '\n';
+        cout << "Ngay truoc:" << 31 << '\/' << 12 << '\/' << Y - 1 << '\n';
+    }
+    else if (D == 31 and M == 12) {
+        cout << "Ngay sau: " << 1 << '\/' << 1 << '\/' << Y + 1<< '\n';
+        cout << "Ngay truoc:" << 30 << '\/' << 12 << '\/' << Y << '\n';
+    }
+    cout << "Ngay sau: "; find_day(stt - 1, Y);
+    cout << "Ngay truoc:"; find_day(stt + 1, Y);
+    cout << "STT: " << stt << '\n';
 }
